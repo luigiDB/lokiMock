@@ -63,6 +63,10 @@ kotlin {
                 implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
                 implementation("io.ktor:ktor-server-netty:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
+
+                // mock
+                implementation("org.slf4j:slf4j-simple:2.0.3")
+                implementation("io.javalin:javalin:5.3.1")
             }
         }
         val serverTest by getting {

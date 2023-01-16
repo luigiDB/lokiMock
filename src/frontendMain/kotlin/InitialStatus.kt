@@ -11,7 +11,7 @@ class InitialStatus() {
         }k
     """.trimIndent()
     val mocks: List<MockConfigurator> = listOf (
-        MockConfigurator("endpoint 1", "{id : \"request 1\"}", "{id : \"response 1\"}"),
-        MockConfigurator("endpoint 2", "{id : \"request 2\"}", "{id : \"response 2\"}")
+        MockConfigurator("get", "endpoint 1", "{id : \"request 1\"}", "{id : \"response 1\"}"),
+        MockConfigurator("get", "endpoint 2", "{id : \"request 2\"}", "{id : \"response 2\"}")
     )
 }
