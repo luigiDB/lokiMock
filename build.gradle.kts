@@ -7,6 +7,7 @@ val serializationVersion = "1.3.3"
 plugins {
     kotlin("multiplatform") version "1.7.21"
     application
+    kotlin("plugin.serialization") version "1.7.20-Beta"
 }
 
 group = "com.github.luigidb"
@@ -38,6 +39,7 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
+
             }
         }
         val commonTest by getting {
