@@ -20,9 +20,15 @@ class JavalinMock(private val mockPort: Int) : MockSetup {
     }
 
     override fun startMock() {
-        app?.close()
-        app = Javalin.create().start(mockPort)
+        if(!isServerRunning()) {
+            app = Javalin.create().start(mockPort)
+        }
     }
+
+    fun stopMock() {
+        app?.close()
+    }
+
 
     private fun isServerRunning(): Boolean {
         return app?.jettyServer()?.started ?: false
