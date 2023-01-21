@@ -3,23 +3,33 @@ package com.github.luigidb.application.mock
 import io.javalin.Javalin
 import io.javalin.http.HandlerType
 
-class JavalinMock : MockSetup {
+class JavalinMock(private val mockPort: Int) : MockSetup {
 
-    var app: Javalin? = null
-    var isRunning = false
+    private var app: Javalin? = null
 
     override fun addRestMock(httpMethod: String, path: String, request: String, response: String): Boolean {
-        return if (isRunning) {
+        return if (isServerRunning()) {
             app?.addHandler(
-                HandlerType.findByName(httpMethod),
+                HandlerType.findByName(httpMethod.uppercase()),
                 path
-            ) { ctx ->
-                ctx.result(response)
-            }
+            ) { ctx -> ctx.result(response) }
             true
         } else {
             false
         }
     }
+
+    override fun startMock() {
+        app?.close()
+        app = Javalin.create().start(mockPort)
+    }
+
+    private fun isServerRunning(): Boolean {
+        return app?.jettyServer()?.started ?: false
+    }
+
+    /**
+     * For subscriptions Javalin support the after method on handlers that can be used to get mock called events
+     */
 }
 
