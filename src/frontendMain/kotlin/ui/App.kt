@@ -1,7 +1,13 @@
 package ui
 
-import InitialStatus
-import mockConfigurator
+import InitialLokiState
+import LokiState
+import MockConfigurator
+import api.addMock
+import csstype.LineStyle.Companion.solid
+import emotion.react.css
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import react.FC
 import react.Props
 import react.dom.html.ReactHTML.button
@@ -11,23 +17,32 @@ import react.dom.html.ReactHTML.li
 import react.dom.html.ReactHTML.ul
 import react.useState
 
+private val scope = MainScope()
 
 val App = FC<Props> {
     //TODO: the initial setup need to be loaded from a static resource
-    val initialStatus: InitialStatus by useState(InitialStatus())
+//    val lokiState by useState<LokiState>(InitialLokiState())
+    val (lokiState, setLokiState) = useState<LokiState>(InitialLokiState())
 
     div {
         h2 {
-            +"Request to ${initialStatus.endpoint}"
+            +"Request to ${lokiState.endpoint}"
         }
         div {
 
             editableText {
-                content = initialStatus.request
+                content = lokiState.request
             }
         }
         button {
             +"start"
+            onClick = {
+                scope.launch {
+                    lokiState.mocks.forEach {
+                        addMock(it)
+                    }
+                }
+            }
         }
     }
 
@@ -37,12 +52,25 @@ val App = FC<Props> {
         }
 
         ul {
-            initialStatus.mocks.forEach { mock ->
-                li{
+            lokiState.mocks.forEach { mock ->
+                li {
+                    css {
+                        border = solid
+                    }
                     mockConfigurator {
-                        name = mock.endpoint
+                        method = mock.method
+                        endpoint = mock.endpoint
                         request = mock.request
                         response = mock.response
+                        notifyUpdate = { endpoint, response ->
+                            println("Received root update on [$endpoint] with [$response]")
+
+                            setLokiState {oldState ->
+                                val foundMock: MockConfigurator? = oldState.mocks.find { it.endpoint == endpoint }
+                                foundMock?.response = response
+                                oldState
+                            }
+                        }
                     }
                 }
             }
