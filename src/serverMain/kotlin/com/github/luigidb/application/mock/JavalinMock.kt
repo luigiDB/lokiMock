@@ -25,8 +25,10 @@ class JavalinMock(private val mockPort: Int) : MockSetup {
         }
     }
 
-    fun stopMock() {
+    override fun invalidateMocks() {
         app?.close()
+        app = null
+        this.startMock()
     }
 
 

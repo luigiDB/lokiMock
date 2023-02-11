@@ -19,3 +19,7 @@ suspend fun addMock(mock: MockConfigurator) {
         setBody(mock)
     }
 }
+
+suspend fun restartMockServer() {
+    jsonClient.delete(MockConfigurator.path) {    }
+}

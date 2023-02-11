@@ -30,6 +30,7 @@ fun main() {
 
         install(CORS) {
             allowMethod(HttpMethod.Get)
+            allowMethod(HttpMethod.Delete)
             anyHost()
         }
 
@@ -55,6 +56,11 @@ fun main() {
                     } else {
                         call.respond(HttpStatusCode.BadRequest)
                     }
+                }
+                delete() {
+                    call.application.environment.log.info("Restart mock server")
+                    mockWrapper.invalidateMocks()
+                    call.respond(HttpStatusCode.OK)
                 }
             }
         }

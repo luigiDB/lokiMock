@@ -4,6 +4,7 @@ import InitialLokiState
 import LokiState
 import MockConfigurator
 import api.addMock
+import api.restartMockServer
 import csstype.LineStyle.Companion.solid
 import emotion.react.css
 import kotlinx.coroutines.MainScope
@@ -21,7 +22,6 @@ private val scope = MainScope()
 
 val App = FC<Props> {
     //TODO: the initial setup need to be loaded from a static resource
-//    val lokiState by useState<LokiState>(InitialLokiState())
     val (lokiState, setLokiState) = useState<LokiState>(InitialLokiState())
 
     div {
@@ -38,6 +38,7 @@ val App = FC<Props> {
             +"start"
             onClick = {
                 scope.launch {
+                    restartMockServer()
                     lokiState.mocks.forEach {
                         addMock(it)
                     }
