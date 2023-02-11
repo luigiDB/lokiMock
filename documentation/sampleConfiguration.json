@@ -1,0 +1,14 @@
+{
+  "endpoint": "under_test_endpoint",
+  "method": "GET",
+  "request": {},
+  "mocks": [
+    {
+      "name": "human readable name for the dependency",
+      "endpoint": "mocked_endpoint",
+      "methods": "GET",
+      "request": {},
+      "response": {}
+    }
+  ]
+}

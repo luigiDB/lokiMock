@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "endpoint": {
+      "type": "string"
+    },
+    "method": {
+      "type": "string"
+    },
+    "request": {
+      "type": "object"
+    },
+    "mocks": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "endpoint": {
+              "type": "string"
+            },
+            "methods": {
+              "type": "string"
+            },
+            "request": {
+              "type": "object"
+            },
+            "response": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "name",
+            "endpoint",
+            "methods",
+            "request",
+            "response"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "endpoint",
+    "method",
+    "request",
+    "mocks"
+  ]
+}
