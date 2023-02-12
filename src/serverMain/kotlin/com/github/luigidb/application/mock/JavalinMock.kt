@@ -31,7 +31,6 @@ class JavalinMock(private val mockPort: Int) : MockSetup {
         this.startMock()
     }
 
-
     private fun isServerRunning(): Boolean {
         return app?.jettyServer()?.started ?: false
     }

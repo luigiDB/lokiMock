@@ -4,6 +4,7 @@ import InitialLokiState
 import LokiState
 import MockConfigurator
 import api.addMock
+import api.callUnderTestEndpoint
 import api.restartMockServer
 import csstype.LineStyle.Companion.solid
 import emotion.react.css
@@ -42,6 +43,9 @@ val App = FC<Props> {
                     lokiState.mocks.forEach {
                         addMock(it)
                     }
+                    //TODO: this can throw an exception
+                    println("Call ${lokiState.endpointMethod} ${lokiState.endpoint} with ${lokiState.request}")
+                    callUnderTestEndpoint(lokiState.endpointMethod, lokiState.endpoint, lokiState.request)
                 }
             }
         }

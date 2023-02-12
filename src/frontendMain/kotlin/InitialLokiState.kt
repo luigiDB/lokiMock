@@ -1,5 +1,6 @@
 class InitialLokiState() : LokiState {
-    override val endpoint:String = "endpointUnderTest"
+    override val endpointMethod: String = "POSt"
+    override val endpoint:String = "http://localhost:7777/endpointUnderTest"
     override var request: String = """
         {
             id: "the id", 

@@ -22,7 +22,7 @@ fun main() {
 
     val mockWrapper: MockSetup = JavalinMock(9898)
 
-    embeddedServer(Netty, port = 8080, host = "127.0.0.1") {
+    embeddedServer(Netty, port = 8080, host = "localhost") {
 
         install(ContentNegotiation) {
             json()
@@ -31,7 +31,8 @@ fun main() {
         install(CORS) {
             allowMethod(HttpMethod.Get)
             allowMethod(HttpMethod.Delete)
-            anyHost()
+            anyHost() //TODO: to be removed
+            allowHeader(HttpHeaders.ContentType)
         }
 
         install(Compression) {
