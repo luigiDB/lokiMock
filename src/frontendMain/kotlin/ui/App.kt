@@ -24,6 +24,7 @@ private val scope = MainScope()
 val App = FC<Props> {
     //TODO: the initial setup need to be loaded from a static resource
     val (lokiState, setLokiState) = useState<LokiState>(InitialLokiState())
+    val (apiResponse, setApiResponse) = useState("")
 
     div {
         h2 {
@@ -45,9 +46,19 @@ val App = FC<Props> {
                     }
                     //TODO: this can throw an exception
                     println("Call ${lokiState.endpointMethod} ${lokiState.endpoint} with ${lokiState.request}")
-                    callUnderTestEndpoint(lokiState.endpointMethod, lokiState.endpoint, lokiState.request)
+                    val resp =
+                        callUnderTestEndpoint(lokiState.endpointMethod, lokiState.endpoint, lokiState.request)
+                    setApiResponse { old ->
+                        resp.toString()
+                    }
                 }
             }
+        }
+        div {
+            h2 {
+                +"Received response"
+            }
+            +apiResponse
         }
     }
 
@@ -70,7 +81,7 @@ val App = FC<Props> {
                         notifyUpdate = { endpoint, response ->
                             println("Received root update on [$endpoint] with [$response]")
 
-                            setLokiState {oldState ->
+                            setLokiState { oldState ->
                                 val foundMock: MockConfigurator? = oldState.mocks.find { it.endpoint == endpoint }
                                 foundMock?.response = response
                                 oldState
