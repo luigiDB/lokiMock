@@ -77,7 +77,7 @@ The frontend is in react but built using Kotlin wrapper.
 
 ## Planned features 
 
-- [ ] Visualize json correctly formatted (Json editor library JS)
+- [x] Visualize json correctly formatted (Json editor library JS)
 - [ ] Show endpoint response
 - [ ] Add support for response matchers
 - [ ] GUI should be statically configured from a JSON file
@@ -93,12 +93,7 @@ The frontend is in react but built using Kotlin wrapper.
 
   Possible implementations are with **SSE** or **Web Sockets**
 - [ ] Add Docker deploy
-- [ ] Separate Gradle configurations in the correct modules. The current setup is as released from the kotlin creator
-  tool that collapse everything in one Gradle file. 
-
-  Server, FrontEnd and Common should become 3 separate Gradle modules. Take inspiration from 
-  [this project](https://github.com/Kotlin/kotlin-full-stack-application-demo) where each module import his own gradle plugins.
-- [ ] Add support for grapQL dependencies.
+- [ ] Add support for graphQL dependencies.
   - GraphQL's responses are already in Json thus the issue is more on the request matcher.  
 
     
