@@ -84,6 +84,10 @@ kotlin {
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion")
+
+                implementation(npm("jsoneditor", "9.9.2"))
+                implementation(npm("jsoneditor-react", "3.1.2"))
+                implementation(npm("ace-builds", "1.15.0"))
             }
         }
         val frontendTest by getting
