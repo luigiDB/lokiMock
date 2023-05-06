@@ -1,5 +1,7 @@
 package ui
 
+import csstype.*
+import emotion.react.css
 import react.FC
 import react.Props
 import react.dom.html.ReactHTML.div
@@ -29,17 +31,33 @@ val mockConfigurator = FC<MockProp>("a mock #$#$") { prop ->
             +"${prop.method.uppercase()} ${prop.endpoint}"
         }
         div {
+            css {
+                display = Display.flex
+            }
             div {
+                css {
+                    float = Float.left
+                    width = 50.pct
+                }
                 h4 { +"Request" }
                 editableText {
                     content = prop.request
                 }
             }
             div {
+                css {
+                    float = Float.left
+                    flexGrow = number(1.0)
+                }
                 h4 { +"Response" }
                 editableText {
                     content = prop.response
                     contentUpdate = manageUpdate
+                }
+            }
+            div {
+                css {
+                    clear = Clear.both
                 }
             }
         }
