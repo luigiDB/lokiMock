@@ -1,0 +1,37 @@
+plugins {
+    id "com.github.node-gradle.node" version "5.0.0"
+}
+
+
+node {
+    // Whether to download and install a specific Node.js version or not
+    // If false, it will use the globally installed Node.js
+    // If true, it will download node using above parameters
+    // Note that npm is bundled with Node.js
+    download = false
+
+    version = "16.18.1"
+    npmVersion = ""
+    yarnVersion = ""
+    distBaseUrl = "https://nodejs.org/dist"
+    allowInsecureProtocol = false
+    npmInstallCommand = "install"
+
+    workDir = file("${project.projectDir}/.gradle/nodejs")
+    npmWorkDir = file("${project.projectDir}/.gradle/npm")
+    yarnWorkDir = file("${project.projectDir}/.gradle/yarn")
+    nodeProjectDir = file("${project.projectDir}")
+
+    nodeProxySettings = ProxySettings.SMART
+}
+
+npm_run_build {
+    inputs.files fileTree("static")
+    inputs.files fileTree("src")
+    inputs.file 'package.json'
+    inputs.file 'package-lock.json'
+    inputs.file 'svelte.config.js'
+    inputs.file 'vite.config.js'
+
+    outputs.dir 'build'
+}
