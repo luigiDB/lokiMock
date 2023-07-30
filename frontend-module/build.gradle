@@ -1,4 +1,5 @@
 plugins {
+    id 'base'
     id "com.github.node-gradle.node" version "5.0.0"
 }
 
@@ -35,3 +36,16 @@ npm_run_build {
 
     outputs.dir 'build'
 }
+
+task packageNpmApp(type: Zip) {
+    dependsOn npm_run_build
+    baseName 'npm-app'
+    extension 'jar'
+    destinationDir file("${projectDir}/build_packageNpmApp")
+    from('build') {
+        // optional path under which output will be visible in Java classpath, e.g. static resources path
+        into 'static'
+    }
+}
+
+assemble.dependsOn npm_run_build
