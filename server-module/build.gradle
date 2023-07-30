@@ -3,9 +3,9 @@ plugins {
     id 'io.ktor.plugin' version '2.3.1'
 }
 
-group "com.example"
+group "com.github.luigidb"
 version "0.0.1"
-mainClassName = "com.example.App"
+mainClassName = "com.github.luigidb.application.ApplicationKt"
 
 def isDevelopment = project.ext.has("development")
 applicationDefaultJvmArgs = ["-Dio.ktor.development=$isDevelopment"]
