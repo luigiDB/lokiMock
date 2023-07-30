@@ -5,6 +5,7 @@ plugins {
 
 
 node {
+    //TODO: this should be set to true on the CI
     // Whether to download and install a specific Node.js version or not
     // If false, it will use the globally installed Node.js
     // If true, it will download node using above parameters
@@ -41,10 +42,9 @@ tasks.register('packageNpmApp', Zip) {
     dependsOn npm_run_build
     baseName 'frontend-app'
     extension 'jar'
-    destinationDir file("${projectDir}/build_packageNpmApp")
+    destinationDir file("${projectDir}/build_static_frontend")
     from('build') {
-        // optional path under which output will be visible in Java classpath, e.g. static resources path
-        into 'static'
+        into 'static-frontend'
     }
 }
 
@@ -65,4 +65,6 @@ artifacts {
 
 clean {
     delete packageNpmApp.archiveFile
+    delete new File('node_modules')
+    delete new File('.svelte-kit')
 }

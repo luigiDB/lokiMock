@@ -10,7 +10,7 @@ fun Application.configureRouting() {
     routing {
         singlePageApplication {
             useResources = true
-            filesPath = "static"
+            filesPath = "static-frontend"
             defaultPage = "index.html"
             useResources = true
         }
