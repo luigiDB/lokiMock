@@ -3,7 +3,8 @@ plugins {
     id "com.github.node-gradle.node" version "5.0.0"
 }
 
-
+//Setup heavily inspired by
+//https://dzone.com/articles/integrating-java-and-npm-builds-using-gradle
 node {
     //TODO: this should be set to true on the CI
     // Whether to download and install a specific Node.js version or not
