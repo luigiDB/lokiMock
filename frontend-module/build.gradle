@@ -37,9 +37,9 @@ npm_run_build {
     outputs.dir 'build'
 }
 
-task packageNpmApp(type: Zip) {
+tasks.register('packageNpmApp', Zip) {
     dependsOn npm_run_build
-    baseName 'npm-app'
+    baseName 'frontend-app'
     extension 'jar'
     destinationDir file("${projectDir}/build_packageNpmApp")
     from('build') {
@@ -48,4 +48,21 @@ task packageNpmApp(type: Zip) {
     }
 }
 
-assemble.dependsOn npm_run_build
+assemble.dependsOn packageNpmApp
+
+configurations {
+    npmResources
+}
+
+configurations.default.extendsFrom(configurations.npmResources)
+
+artifacts {
+    npmResources(packageNpmApp.archiveFile) {
+        builtBy packageNpmApp
+        type "jar"
+    }
+}
+
+clean {
+    delete packageNpmApp.archiveFile
+}
