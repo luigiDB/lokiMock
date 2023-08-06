@@ -79,7 +79,7 @@ The frontend is in react but built using Kotlin wrapper.
 
 - [x] Visualize json correctly formatted (Json editor library JS)
 - [ ] Show endpoint response
-- [ ] Add support for response matchers
+- [ ] Add support for request matchers
 - [ ] GUI should be statically configured from a JSON file
 
   The final setup should be similar to this [one](./documentation/sampleConfiguration.json)

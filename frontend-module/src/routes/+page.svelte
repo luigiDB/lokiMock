@@ -5,13 +5,21 @@
     export let data;
 
     let requestJson = {
-        json: data.request
+        json: data.request.request
     }
 
     $: randomResponse = new Promise((yes, no) => {})
     function getRandom() {
         return fetch("http://0.0.0.0:8080/server/random")
             .then(response => response.text())
+    }
+
+    $: serviceResponse = null
+    function callService() {
+        return fetch(data.request.endpoint, {
+            method: data.request.method.toUpperCase()
+        })
+            .then(response => serviceResponse = response.text())
     }
 </script>
 
@@ -24,12 +32,22 @@
 
 <h1>{data.title}</h1>
 
-<div class="flex-container">
+<button on:click={callService}>Execute request</button>
 
+<div class="flex-container">
     <div class="flex-child">
-        <h2>request</h2>
+        <p><span>{data.request.method}</span> {data.request.endpoint}</p>
         <JSONEditor bind:content={requestJson} mode='tree'/>
-        <br>
+        <div>
+            <h2>Response</h2>
+            {#if serviceResponse}
+                {#await serviceResponse}
+                    <h1>Waiting for response</h1>
+                {:then value} 
+                    <p>{value}</p>
+                {/await}
+            {/if}
+        </div>
     </div>
     
     <div class="flex-child">
@@ -55,4 +73,8 @@
     .flex-child:first-child {
         margin-right: 20px;
     } 
+
+    span{
+        color: red;
+    }
 </style>

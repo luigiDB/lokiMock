@@ -2,9 +2,13 @@ export function load() {
     return {
         title: "The title",
         request: {
-            first: 'first value', 
-            second: 'second value'
-        }, 
+            method: "get", 
+            endpoint: "http://0.0.0.0:9191/endpointUnderTest",
+            request: {
+                first: 'first value', 
+                second: 'second value'
+            }
+        },
         mocks: [
             {
                 name: "first mock",
