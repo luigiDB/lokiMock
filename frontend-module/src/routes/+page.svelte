@@ -21,6 +21,14 @@
         })
             .then(response => serviceResponse = response.text())
     }
+
+    function handleMockUpdate(event) {
+        const match = data.mocks
+            .find(mock => mock.name === event.detail.identifier);
+        if(match) {
+            match.response = event.detail.response
+        }
+	}
 </script>
 
 {#await randomResponse}
@@ -54,7 +62,7 @@
         <h2>Mocks</h2>
 
         {#each data.mocks as mock} 
-                <Mock bind:mock></Mock>
+                <Mock bind:mock on:mockUpdate={handleMockUpdate}></Mock>
         {/each}
 
     </div>
