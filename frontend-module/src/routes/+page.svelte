@@ -4,32 +4,23 @@
 
     export let data;
 
-    let original = {
-        json: data
-    }
-
     let requestJson = {
         json: data.request
     }
 
-    $: responseFromServer = 'foo'
-
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://0.0.0.0:8080//server/random");
-    xhr.send();
-    xhr.onload = () => {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-        console.log(xhr.responseText);
-        responseFromServer = xhr.responseText
-
-    } else {
-        console.log(`Error: ${xhr.status}`);
+    $: randomResponse = new Promise((yes, no) => {})
+    function getRandom() {
+        return fetch("http://0.0.0.0:8080/server/random")
+            .then(response => response.text())
     }
-    };
-    
 </script>
 
-<h1>{responseFromServer}</h1>
+{#await randomResponse}
+    <h1>Waiting for Random number</h1>
+{:then value} 
+<h1>Random: {value}</h1>
+{/await}
+<button on:click={() => randomResponse = getRandom()}>generate new random</button>
 
 <h1>{data.title}</h1>
 
