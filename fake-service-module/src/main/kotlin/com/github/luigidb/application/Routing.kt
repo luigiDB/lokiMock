@@ -19,6 +19,10 @@ import kotlinx.serialization.json.JsonObject
 
 fun Application.configureRouting() {
 
+    fun String.escapeString(): String {
+        return this.replace("\"", "\\\"")
+    }
+
     routing {
         get("/endpointUnderTest") {
 
@@ -51,15 +55,15 @@ fun Application.configureRouting() {
                         }
                     }.bodyAsText()
                 }
-                val firstRequestContent = firstRequest.await()
-                val secondRequestContent = secondRequest.await()
+                val firstRequestContent: String = firstRequest.await()
+                val secondRequestContent: String = secondRequest.await()
 
                 client.close()
                 val response = Json { prettyPrint = true }
                 val jsonObject = response.parseToJsonElement(
                     """{
-                            "first": "$firstRequestContent",
-                            "second": "$secondRequestContent"
+                            "first": "${firstRequestContent.escapeString()}",
+                            "second": "${secondRequestContent.escapeString()}"
                           }"""
                 ) as JsonObject
                 call.respond(jsonObject)
