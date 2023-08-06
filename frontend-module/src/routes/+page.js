@@ -10,9 +10,6 @@ export function load() {
                 name: "first mock",
                 method: "get", 
                 endpoint: "/foo",
-                request: {
-                    a: "value a"
-                },
                 response: {
                     b: "value b"
                 }
@@ -21,9 +18,6 @@ export function load() {
                 name: "second mock",
                 method: "get", 
                 endpoint: "/bar",
-                request: {
-                    c: "value c"
-                },
                 response: {
                     d: "value d"
                 }

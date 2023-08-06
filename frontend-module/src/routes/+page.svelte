@@ -42,14 +42,13 @@
     </div>
     
     <div class="flex-child">
-      <h2>Mocks</h2>
+        <h2>Mocks</h2>
 
-      {#each data.mocks as mock} 
-            <Mock bind:mock></Mock>
-      {/each}
+        {#each data.mocks as mock} 
+                <Mock bind:mock></Mock>
+        {/each}
 
     </div>
-    
 </div>
 
 <style>
