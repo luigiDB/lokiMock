@@ -15,12 +15,46 @@
     }
 
     $: serviceResponse = null
-    function callService() {
-        return fetch(data.request.endpoint, {
-            method: data.request.method.toUpperCase()
+    async function callService() {
+        fetch("http://0.0.0.0:8080/mockConfiguration", {
+            method: 'DELETE'
         })
-            .then(response => serviceResponse = response.text())
+            .then((_) => {
+                data.mocks.map(element => {
+                    configureMock(element)
+                });
+            })
+            .then((_) => {
+                fetch(data.request.endpoint, {
+                    method: data.request.method.toUpperCase()
+                })
+                .then(response => serviceResponse = response.text())
+            })
     }
+
+    async function configureMock(element) {
+        fetch("http://0.0.0.0:8080/mockConfiguration", {
+                method: 'POST', 
+                headers: {
+                "Content-Type": "application/json",
+            },
+                body: JSON.stringify(
+                    {
+                        "method": element.method,
+                        "endpoint": element.endpoint,
+                        "request": "",
+                        "response": JSON.stringify(element.response)
+                    }
+                )
+            })
+            .then(response => {
+                if(response.ok) {
+                    console.log("Configured", element.endpoint);
+                } else {
+                    console.error("Canot configure", element.endpoint);
+                }
+            })
+        }
 
     function handleMockUpdate(event) {
         const match = data.mocks
