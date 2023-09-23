@@ -23,7 +23,11 @@ fun Application.module() {
     install(CORS) {
         allowMethod(HttpMethod.Get)
         allowMethod(HttpMethod.Delete)
-        allowHost("127.0.0.1:5173")
+        allowMethod(HttpMethod.Post)
+//        allowHost("127.0.0.1")
+//        allowHost("localhost")
+//        allowHost("0.0.0.0")
+        anyHost()
         allowHeader(HttpHeaders.ContentType)
     }
 

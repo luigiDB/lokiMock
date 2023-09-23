@@ -21,7 +21,14 @@ class JavalinMock(private val mockPort: Int) : MockSetup {
 
     override fun startMock() {
         if(!isServerRunning()) {
-            app = Javalin.create().start(mockPort)
+            app = Javalin.create()
+                .start(mockPort)
+                .before { ctx ->
+                    println("Mock - Request [${ctx.path()}] with body [${ctx.body()}]")
+                }
+                .after { ctx ->
+                    println("Mock - Response [${ctx.result()}]")
+                }
         }
     }
 

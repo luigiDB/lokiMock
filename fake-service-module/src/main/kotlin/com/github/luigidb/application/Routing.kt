@@ -61,10 +61,12 @@ fun Application.configureRouting() {
                 client.close()
                 val response = Json { prettyPrint = true }
                 val jsonObject = response.parseToJsonElement(
-                    """{
-                            "first": "${firstRequestContent.escapeString()}",
-                            "second": "${secondRequestContent.escapeString()}"
-                          }"""
+                """
+                      {
+                        "first": "${firstRequestContent.escapeString()}",
+                        "second": "${secondRequestContent.escapeString()}"
+                      }
+                      """
                 ) as JsonObject
                 call.respond(jsonObject)
             }

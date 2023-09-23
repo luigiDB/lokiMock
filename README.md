@@ -71,14 +71,14 @@ sequenceDiagram
 
 ## Tech stack
 
-The system is a full-stack web applications build with [Kotlin multiplatfor](https://kotlinlang.org/docs/multiplatform.html#full-stack-web-applications).
-The backend is in native kotlin with Ktor server as base. 
-The frontend is in react but built using Kotlin wrapper.
+The frontend is in pure [Svelte](https://svelte.dev/).
+The backend is in native kotlin with [Ktor server](https://ktor.io/) and the mocks are implemented in [Javalin](https://javalin.io/). 
 
 ## Planned features 
 
 - [x] Visualize json correctly formatted (Json editor library JS)
 - [ ] Show endpoint response
+- [ ] Add logging
 - [ ] Add support for request matchers
 - [ ] GUI should be statically configured from a JSON file
 
