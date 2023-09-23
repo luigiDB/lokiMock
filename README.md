@@ -77,7 +77,7 @@ The backend is in native kotlin with [Ktor server](https://ktor.io/) and the moc
 ## Planned features 
 
 - [x] Visualize json correctly formatted (Json editor library JS)
-- [ ] Show endpoint response
+- [x] Show endpoint response
 - [ ] Add logging
 - [ ] Add support for request matchers
 - [ ] GUI should be statically configured from a JSON file
