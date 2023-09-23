@@ -16,6 +16,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 
 fun Application.configureRouting() {
 
@@ -60,14 +61,15 @@ fun Application.configureRouting() {
 
                 client.close()
                 val response = Json { prettyPrint = true }
-                val jsonObject = response.parseToJsonElement(
-                """
-                      {
-                        "first": "${firstRequestContent.escapeString()}",
-                        "second": "${secondRequestContent.escapeString()}"
-                      }
-                      """
-                ) as JsonObject
+
+                val json1 = response.parseToJsonElement(firstRequestContent).jsonObject
+                val json2 = response.parseToJsonElement(secondRequestContent).jsonObject
+
+                val mergedJson = json1.toMutableMap().apply {
+                    putAll(json2)
+                }
+
+                val jsonObject = Json.encodeToString(JsonObject.serializer(), JsonObject(mergedJson))
                 call.respond(jsonObject)
             }
         }
