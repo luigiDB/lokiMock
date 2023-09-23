@@ -8,12 +8,6 @@
         json: data.request.request
     }
 
-    $: randomResponse = new Promise((yes, no) => {})
-    function getRandom() {
-        return fetch("http://0.0.0.0:8080/server/random")
-            .then(response => response.text())
-    }
-
     $: serviceResponse = null
     async function callService() {
         fetch("http://0.0.0.0:8080/mockConfiguration", {
@@ -28,7 +22,9 @@
                 fetch(data.request.endpoint, {
                     method: data.request.method.toUpperCase()
                 })
-                .then(response => serviceResponse = response.text())
+                .then(async response => serviceResponse = {
+                    text: await response.text()
+                })
             })
     }
 
@@ -65,13 +61,6 @@
 	}
 </script>
 
-{#await randomResponse}
-    <h1>Waiting for Random number</h1>
-{:then value} 
-<h1>Random: {value}</h1>
-{/await}
-<button on:click={() => randomResponse = getRandom()}>generate new random</button>
-
 <h1>{data.title}</h1>
 
 <button on:click={callService}>Execute request</button>
@@ -81,12 +70,12 @@
         <p><span>{data.request.method}</span> {data.request.endpoint}</p>
         <JSONEditor bind:content={requestJson} mode='tree'/>
         <div>
-            <h2>Response</h2>
             {#if serviceResponse}
+                <h2>Response</h2>
                 {#await serviceResponse}
                     <h1>Waiting for response</h1>
                 {:then value} 
-                    <p>{value}</p>
+                    <JSONEditor bind:content={serviceResponse} mode='tree'/>
                 {/await}
             {/if}
         </div>
